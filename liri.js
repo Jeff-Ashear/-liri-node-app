@@ -1,7 +1,14 @@
 require("dotenv").config();
 
 var keys = require("./keys.js");
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
+
+function Spotify (id, secret) {
+    this.id = id;
+    this.secret = secret;
+    console.log("constructor id: ", id)
+    console.log("constructor secret: ", secret)
+}
 
 //commands that liri can take in
 // concert-this
@@ -12,7 +19,8 @@ var userCommand = process.argv[2]
 var userInput = process.argv.slice(3);
 
 console.log(userInput)
-// console.log(spotify)
+console.log(spotify)
+console.log(keys)
 
 if (userCommand == "concert-this") {
     console.log(userCommand)
