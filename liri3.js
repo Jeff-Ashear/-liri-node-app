@@ -3,13 +3,20 @@ const axios = require("axios")
 const moment = require("moment")
 
 var keys = require("./keys.js");
+var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 
-function Spotify (id, secret) {
-    this.id = id;
-    this.secret = secret;
-    console.log("constructor id: ", id)
-    console.log("constructor secret: ", secret)
+function getMeSpotify () {
+    console.log("inside spotify function")
+    spotify.search({ type: 'track', query: userInput }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+       
+      //console.log(data); 
+      var songs = data.tracks.items[0];
+      console.log(songs.album.artists)
+    });
 }
 
 //commands that liri can take in
@@ -21,8 +28,9 @@ var userCommand = process.argv[2]
 var userInput = process.argv.slice(3);
 
 console.log(userInput)
-console.log(spotify)
-console.log(keys)
+// console.log(spotify)
+console.log(keys.id)
+console.log(keys.secret)
 
 if (userCommand == "concert-this") {
     console.log(userCommand)
@@ -33,11 +41,13 @@ if (userCommand == "concert-this") {
     //query bands in town via axios
     axios.get(userConcertURL)
         .then(response =>  {
-        console.log(response.data)
+            //loop
+        console.log(response.data[0])
         console.log(userInput, "will be playing the following venues:")
         // for (i = 0; i < offers.length; i++) {
-            console.log(response.data.venue.name)      
+            console.log(response.data[0].venue.name)      
     })
+
     .catch(function(error) {
         console.log(error);
     })
@@ -46,6 +56,7 @@ if (userCommand == "concert-this") {
 if (userCommand == "spotify-this-song") {
     console.log(userCommand)
     console.log("time to spotify")
+    getMeSpotify();
 }
 
 if (userCommand == "movie-this") {
@@ -59,3 +70,23 @@ if (userCommand == "do-what-it-says") {
 }
 
 //concert-this system:
+
+function start(ar1, ar2){
+    switch(ar1) {
+        case "spotify-this-song": getMeSpotify(arg2);
+             break;
+    
+        case "concert-this": getMyBands(arg2);
+          // code block
+          break;
+        default: console.log("I don't know what you are taking");
+          // code block
+      }
+}
+start(userCommand, userInput);
+function doWhatItSays(){
+    // read random.txt file
+    // you will get data back after reading the file
+    var resultArray = data.split(",");
+    start(resultArray[0], resultArray[1]);
+}
