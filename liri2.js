@@ -35,9 +35,11 @@ if (userCommand == "concert-this") {
         .then(response =>  {
         console.log(response.data)
         console.log(userInput, "will be playing the following venues:")
-        for (i = 0; i < offers.length; i++) {
-            console.log(response.data.offers[i].venue.name)
-        }
+        // for (i = 0; i < offers.length; i++) {
+            console.log(response.data.venue.name)      
+    })
+    .catch(function(error) {
+        console.log(error);
     })
 }
 
