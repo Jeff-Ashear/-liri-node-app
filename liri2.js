@@ -1,4 +1,6 @@
 require("dotenv").config();
+const axios = require("axios")
+const moment = require("moment")
 
 var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
@@ -24,9 +26,19 @@ console.log(keys)
 
 if (userCommand == "concert-this") {
     console.log(userCommand)
-    var userConcert = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp"
+    var userConcertURL = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp"
     console.log("time to BandsInTown")
-    console.log("gotta query: ", userConcert)
+    console.log("gotta query: ", userConcertURL)
+
+    //query bands in town via axios
+    axios.get(userConcertURL)
+        .then(response =>  {
+        console.log(response.data)
+        console.log(userInput, "will be playing the following venues:")
+        for (i = 0; i < offers.length; i++) {
+            console.log(response.data.offers[i].venue.name)
+        }
+    })
 }
 
 if (userCommand == "spotify-this-song") {
