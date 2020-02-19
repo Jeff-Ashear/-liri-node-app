@@ -17,9 +17,11 @@ function getMyBands() {
     axios.get(bandQuery)
     .then(response => {
         // console.log(response.data)
-            if (response.data != null) {
+            if (response.data.length === 0) {
+                console.log("Sorry, ", userInput.join(" "), "currently does not have any upcoming performances.")
+            } else {
                 
-                console.log(userInput, " will be playing at the following venues:")
+                console.log(userInput.join(" "), " will be playing at the following venues:")
                 for (i = 0; i < response.data.length; i++) {
                     console.log(response.data[i].venue.name)
                     console.log(response.data[i].venue.city, ", ", response.data[i].venue.country)
@@ -27,8 +29,6 @@ function getMyBands() {
                     console.log(concertTime)
                     console.log("----------------------")
                 }
-            } else {
-                console.log(userInput, " currently has no upcoming concerts.")
             }
         });
 }
