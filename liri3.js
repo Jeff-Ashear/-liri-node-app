@@ -40,9 +40,12 @@ function getMeSpotify () {
           return console.log('Error occurred: ' + err);
         }
        
-      //console.log(data); 
+    //   console.log(data); 
       var songs = data.tracks.items[0];
+      console.log(songs)
       console.log(songs.album.artists)
+      console.log(userInput.join(" "), "was composed and performed by", songs.artists[0].name)
+      console.log("Check it out: ", songs.album.artists[0].external_urls.spotify)
     });
 }
 
