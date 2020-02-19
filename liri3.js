@@ -6,6 +6,28 @@ var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 
+var userCommand = process.argv[2]
+var userInput = process.argv.slice(3);
+
+
+function getMyBands() {
+    console.log("inside bands function")
+    var bandQuery = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp"
+    console.log(bandQuery)
+    axios.get(bandQuery)
+    .then(response => {
+        // console.log(response.data)
+            console.log(userInput, " will be playing at the following venues:")
+            for (i = 0; i < response.data.length; i++) {
+            console.log(response.data[i].venue.name)
+            console.log(response.data[i].venue.city, ", ", response.data[i].venue.country)
+            var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
+            console.log(concertTime)
+            console.log("----------------------")
+            }
+        });
+}
+
 function getMeSpotify () {
     console.log("inside spotify function")
     spotify.search({ type: 'track', query: userInput }, function(err, data) {
@@ -24,40 +46,12 @@ function getMeSpotify () {
 // spotify-this-song
 // movie-this
 // do-what-it-says
-var userCommand = process.argv[2]
-var userInput = process.argv.slice(3);
 
 console.log(userInput)
 // console.log(spotify)
 console.log(keys.id)
 console.log(keys.secret)
 
-if (userCommand == "concert-this") {
-    console.log(userCommand)
-    var userConcertURL = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp"
-    console.log("time to BandsInTown")
-    console.log("gotta query: ", userConcertURL)
-
-    //query bands in town via axios
-    axios.get(userConcertURL)
-        .then(response =>  {
-            //loop
-        console.log(response.data[0])
-        console.log(userInput, "will be playing the following venues:")
-        // for (i = 0; i < offers.length; i++) {
-            console.log(response.data[0].venue.name)      
-    })
-
-    .catch(function(error) {
-        console.log(error);
-    })
-}
-
-if (userCommand == "spotify-this-song") {
-    console.log(userCommand)
-    console.log("time to spotify")
-    getMeSpotify();
-}
 
 if (userCommand == "movie-this") {
     console.log(userCommand)
@@ -71,15 +65,19 @@ if (userCommand == "do-what-it-says") {
 
 //concert-this system:
 
-function start(ar1, ar2){
+function start(ar1, arg2){
     switch(ar1) {
+        case "concert-this": getMyBands(arg2);
+           console.log("time to rock the fuck out") 
+           
+          break;
+
         case "spotify-this-song": getMeSpotify(arg2);
              break;
+
+        case "movie-this": 
     
-        case "concert-this": getMyBands(arg2);
-          // code block
-          break;
-        default: console.log("I don't know what you are taking");
+        default: console.log("Please enter one of the following commands: concert-this, spotify-this-song, or movie-this.  Then enter the title of a song, musical act, or film.");
           // code block
       }
 }
