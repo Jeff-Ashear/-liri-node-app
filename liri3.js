@@ -12,18 +12,23 @@ var userInput = process.argv.slice(3);
 
 function getMyBands() {
     console.log("inside bands function")
-    var bandQuery = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp"
+    var bandQuery = "https://rest.bandsintown.com/artists/" + userInput.join('') + "/events?app_id=codingbootcamp"
     console.log(bandQuery)
     axios.get(bandQuery)
     .then(response => {
         // console.log(response.data)
-            console.log(userInput, " will be playing at the following venues:")
-            for (i = 0; i < response.data.length; i++) {
-            console.log(response.data[i].venue.name)
-            console.log(response.data[i].venue.city, ", ", response.data[i].venue.country)
-            var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
-            console.log(concertTime)
-            console.log("----------------------")
+            if (response.data != null) {
+                
+                console.log(userInput, " will be playing at the following venues:")
+                for (i = 0; i < response.data.length; i++) {
+                    console.log(response.data[i].venue.name)
+                    console.log(response.data[i].venue.city, ", ", response.data[i].venue.country)
+                    var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
+                    console.log(concertTime)
+                    console.log("----------------------")
+                }
+            } else {
+                console.log(userInput, " currently has no upcoming concerts.")
             }
         });
 }
