@@ -61,6 +61,10 @@ function getMeSpotify () {
     });
 }
 
+function getMyMovies() {
+    console.log("Movie function is moving.")
+}
+
 //commands that liri can take in
 // concert-this
 // spotify-this-song
@@ -95,7 +99,9 @@ function start(ar1, arg2){
         case "spotify-this-song": getMeSpotify(arg2);
              break;
 
-        case "movie-this": 
+        case "movie-this": getMyMovies(arg2);
+            console.log("time to veg the fuck out")
+            break;
     
         default: console.log("Please enter one of the following commands: concert-this, spotify-this-song, or movie-this.  Then enter the title of a song, musical act, or film.");
           // code block
