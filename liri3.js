@@ -35,31 +35,32 @@ function getMyBands() {
 
 function getMeSpotify () {
     console.log("inside spotify function")
-    spotify.search({ type: 'track', query: userInput }, function(err, data) {
-        if (err) {
-          return console.log('Error occurred: ' + err);
-        }
-       
-    //   console.log(data);
+    if (userInput.length === 0) {
+        console.log('Nothing to hear, see?')
+        userInput = "the sign"
+    }
+        spotify.search({ type: 'track', query: userInput }, function(err, data) {
+            if (err) {
+            return console.log('Error occurred: ' + err);
+            }
+        
+        //   console.log(data);
 
-        if (data.tracks.items.length === 0) {
-            console.log('Nothing to hear, see?')
-        } else {
+            
+                for (i = 0; i < data.tracks.items.length; i++) {
+        
+                var songs = data.tracks.items[i];
+                //   console.log(songs)
+                // console.log("Songs.album.artists: ", songs.album.artists)
+                console.log("Artist: ", songs.artists[0].name)
+                console.log("Track Title: ", songs.name)
+                console.log("Check it out: ", songs.external_urls.spotify)
+                console.log("From the album: ", songs.album.name)
+                console.log("----------------------------")
+            }
+        });
+    }
 
-            for (i = 0; i < data.tracks.items.length; i++) {
-      
-              var songs = data.tracks.items[i];
-              //   console.log(songs)
-              // console.log("Songs.album.artists: ", songs.album.artists)
-              console.log("Artist: ", songs.artists[0].name)
-              console.log("Track Title: ", songs.name)
-              console.log("Check it out: ", songs.external_urls.spotify)
-              console.log("From the album: ", songs.album.name)
-              console.log("----------------------------")
-              }
-        }
-    });
-}
 
 function getMyMovies() {
     console.log("Movie function is moving.")
