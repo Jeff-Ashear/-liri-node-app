@@ -36,7 +36,7 @@ function getMyBands() {
 function getMeSpotify () {
     console.log("inside spotify function")
     if (userInput.length === 0) {
-        console.log('Nothing to hear, see?')
+        console.log('The instructions insist that I set the default spotify query to "The Sign" by Ace of Base.  I have tremendous difficulties imagining why, but I did it anyway.  When you are done with that drek and you find yourself ready to hear some music with a much higher level of facility and craft, try querying "Shofukan" by Snarky Puppy, "CAFO" by Animals as Leaders, or "Garden in the Bones" by Periphery.  Your brain and ears deserve it.')
         userInput = "the sign"
     }
         spotify.search({ type: 'track', query: userInput }, function(err, data) {
@@ -64,6 +64,26 @@ function getMeSpotify () {
 
 function getMyMovies() {
     console.log("Movie function is moving.")
+    if (userInput.length === 0) {
+        console.log("nothing to see hear...")
+        userInput = "Mr. Nobody"
+    }
+    var queryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
+
+    axios.get(queryUrl).then(
+        function(response){
+            console.log("=============================")
+            // console.log(response.data)
+            console.log("Title: ", response.data.Title)
+            console.log("Released: ", response.data.Year)
+            console.log("IMDB Rating: ", response.data.imdbRating)
+            console.log("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value)
+            console.log("Produced in: ", response.data.Country)
+            console.log("Language(s): ", response.data.Language)
+            console.log("Actors: ", response.data.Actors)
+            console.log("=============================")
+        }
+    )
 }
 
 //commands that liri can take in
