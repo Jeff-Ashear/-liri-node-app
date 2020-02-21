@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios")
 const moment = require("moment")
+const fs = require("fs")
 
 var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
@@ -36,7 +37,7 @@ function getMyBands() {
 
 function getMeSpotify () {
     console.log("inside spotify function")
-    if (userInput.length === 0) {
+    if (userCommand === "spotify-this-song" && userInput.length === 0) {
         console.log('The instructions insist that I set the default spotify query to "The Sign" by Ace of Base.  I have tremendous difficulties imagining why, but I did it anyway.  When you are done with that drek and you find yourself ready to hear some music with a much higher level of facility and craft, try querying "Shofukan" by Snarky Puppy, "CAFO" by Animals as Leaders, or "Garden in the Bones" by Periphery.  Your brain and ears deserve it.')
         userInput = "the sign"
     }
@@ -65,7 +66,7 @@ function getMeSpotify () {
 
 function getMyMovies() {
     console.log("Movie function is moving.")
-    if (userInput.length === 0) {
+    if (userCommand === "movie-this" && userInput.length === 0) {
         console.log("nothing to see hear...")
         userInput = "Mr. Nobody"
     }
@@ -125,14 +126,19 @@ function start(ar1, arg2){
             console.log("time to veg the fuck out")
             break;
     
-        default: console.log("Please enter one of the following commands: concert-this, spotify-this-song, or movie-this.  Then enter the title of a song, musical act, or film.");
-          // code block
+        default: doWhatItSays();
       }
 }
 start(userCommand, userInput);
 function doWhatItSays(){
     // read random.txt file
-    // you will get data back after reading the file
-    var resultArray = data.split(",");
-    start(resultArray[0], resultArray[1]);
+    fs.readFile("./random1.txt", "utf8", function(error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        var resultArray = data.split(",");
+        console.log(resultArray)
+        start(resultArray[0], resultArray[1]);
+    });
 }
+   console.log(userCommand, userInput)
