@@ -23,11 +23,12 @@ function getMyBands() {
                 
                 console.log(userInput.join(" "), " will be playing at the following venues:")
                 for (i = 0; i < response.data.length; i++) {
+                    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                     console.log(response.data[i].venue.name)
                     console.log(response.data[i].venue.city, ", ", response.data[i].venue.country)
                     var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
                     console.log(concertTime)
-                    console.log("----------------------")
+                    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 }
             }
         });
