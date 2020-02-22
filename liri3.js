@@ -132,13 +132,43 @@ function start(ar1, arg2){
 start(userCommand, userInput);
 function doWhatItSays(){
     // read random.txt file
-    fs.readFile("./random1.txt", "utf8", function(error, data) {
-        if (error) {
-            return console.log(error);
-        }
-        var resultArray = data.split(",");
-        console.log(resultArray)
-        start(resultArray[0], resultArray[1]);
-    });
+    var randoNumNum = Math.ceil(Math.random() * 3);
+
+    if (randoNumNum === 1) {
+
+        fs.readFile("./random1.txt", "utf8", function(error, data) {
+            if (error) {
+                return console.log(error);
+            }
+            var resultArray = data.split(",");
+            console.log(resultArray)
+            userCommand = resultArray[0];
+            userInput = resultArray[1];
+            start(resultArray[0], resultArray[1]);
+        });
+    } else  if (randoNumNum === 2) {
+
+        fs.readFile("./random2.txt", "utf8", function(error, data) {
+            if (error) {
+                return console.log(error);
+            }
+            var resultArray = data.split(",");
+            console.log(resultArray)
+            userCommand = resultArray[0];
+            userInput = resultArray[1];
+            start(resultArray[0], resultArray[1]);
+        });
+    } else  if (randoNumNum === 3) {
+
+        fs.readFile("./random3.txt", "utf8", function(error, data) {
+            if (error) {
+                return console.log(error);
+            }
+            var resultArray = data.split(",");
+            console.log(resultArray)
+            userCommand = resultArray[0];
+            userInput = resultArray[1];
+            start(resultArray[0], resultArray[1]);
+        });
+    }
 }
-   console.log(userCommand, userInput)
