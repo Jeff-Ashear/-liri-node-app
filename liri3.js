@@ -38,7 +38,7 @@ function getMyBands() {
 function getMeSpotify () {
     console.log("inside spotify function")
     if (userCommand === "spotify-this-song" && userInput.length === 0) {
-        console.log('The instructions insist that I set the default spotify query to "The Sign" by Ace of Base.  I have tremendous difficulties imagining why, but I did it anyway.  When you are done with that drek and you find yourself ready to hear some music with a much higher level of facility and craft, try querying "Shofukan" by Snarky Puppy, "CAFO" by Animals as Leaders, or "Garden in the Bones" by Periphery.  Your brain and ears deserve it.')
+        console.log('The instructions insist that I set the default spotify query to "The Sign" by Ace of Base.  I have tremendous difficulties imagining why, but I did it anyway.  When you are done with that drek and you find yourself ready to hear some music with a significantly more developed level facility and craft, try querying "Shofukan" by Snarky Puppy, "CAFO" by Animals as Leaders, or "Garden in the Bones" by Periphery.  Your brain and ears deserve it.')
         userInput = "the sign"
     }
         spotify.search({ type: 'track', query: userInput }, function(err, data) {
@@ -115,22 +115,19 @@ if (userCommand == "do-what-it-says") {
 function start(ar1, arg2){
     switch(ar1) {
         case "concert-this": getMyBands(arg2);
-           console.log("time to rock the fuck out") 
-           
           break;
 
         case "spotify-this-song": getMeSpotify(arg2);
              break;
 
         case "movie-this": getMyMovies(arg2);
-            console.log("time to veg the fuck out")
             break;
     
-        default: doWhatItSays();
+        default: suggestions();
       }
 }
 start(userCommand, userInput);
-function doWhatItSays(){
+function suggestions(){
     // read random.txt file
     var randoNumNum = Math.ceil(Math.random() * 3);
 
