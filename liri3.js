@@ -20,17 +20,17 @@ function getMyBands() {
     .then(response => {
         // console.log(response.data)
             if (response.data.length === 0) {
-                console.log("Sorry, ", userInput.join(" "), "currently does not have any upcoming performances.")
+                console.log(chalk.bgRed("Sorry, ", userInput.join(" "), "currently does not have any upcoming performances."));
             } else {
                 
                 console.log(userInput.join(" "), " will be playing at the following venues:")
                 for (i = 0; i < response.data.length; i++) {
-                    console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+                    console.log(chalk.yellow.bold("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
                     console.log(chalk.redBright(response.data[i].venue.name));
                     console.log(chalk.blue(response.data[i].venue.city, ", ", response.data[i].venue.country));
                     var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
                     console.log(chalk.blue(concertTime));
-                    console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+                    console.log(chalk.yellow.bold("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
                 }
             }
         });
@@ -51,15 +51,15 @@ function getMeSpotify () {
                     var songs = data.tracks.items[i];
                     //   console.log(songs)
                     // console.log("Songs.album.artists: ", songs.album.artists)
-                    console.log("Artist: ", songs.artists[0].name)
-                    console.log("Track Title: ", songs.name)
-                    console.log("Check it out: ", songs.external_urls.spotify)
-                    console.log("From the album: ", songs.album.name)
-                    console.log("----------------------------")
+                    console.log(chalk.red.bold("----------------------------"));
+                    console.log(chalk.yellow.bold.underline("Artist: ", songs.artists[0].name));
+                    console.log(chalk.green.underline("Track Title: ", songs.name));
+                    console.log(chalk.cyan("Check it out: ", songs.external_urls.spotify));
+                    console.log(chalk.cyan("From the album: ", songs.album.name));
+                    console.log(chalk.red.bold("----------------------------"));
             }
         });
     }
-
 
 function getMyMovies() {
     // console.log("Movie function is moving.")
@@ -73,19 +73,20 @@ function getMyMovies() {
         function(response){
             console.log(chalk.redBright("============================="));
             // console.log(response.data)
-            console.log(chalk.yellow("Title: ", response.data.Title));
-            console.log(chalk.blue("Released: ", response.data.Year));
-            console.log(chalk.blue("IMDB Rating: ", response.data.imdbRating));
-            console.log(chalk.blue("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value));
-            console.log(chalk.blue("Produced in: ", response.data.Country));
-            console.log(chalk.blue("Language(s): ", response.data.Language));
-            console.log(chalk.blue("Actors: ", response.data.Actors));
+            console.log(chalk.yellow.bold.underline("Title: ", response.data.Title));
+            console.log(chalk.cyan("Released: ", response.data.Year));
+            console.log(chalk.cyan("IMDB Rating: ", response.data.imdbRating));
+            console.log(chalk.cyan("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value));
+            console.log(chalk.cyan("Produced in: ", response.data.Country));
+            console.log(chalk.cyan("Language(s): ", response.data.Language));
+            console.log(chalk.cyan("Actors: ", response.data.Actors));
             console.log(chalk.redBright("============================="));
         }
     )
 }
 
-console.log(userInput)
+//console log diagnostic set:
+// console.log(userInput)
 // console.log(spotify)
 // console.log(keys.id)
 // console.log(keys.secret)
@@ -95,13 +96,10 @@ function start(ar1, arg2){
     switch(ar1) {
         case "concert-this": getMyBands(arg2);
           break;
-
         case "spotify-this-song": getMeSpotify(arg2);
              break;
-
         case "movie-this": getMyMovies(arg2);
             break;
-    
         default: suggestions();
       }
 }

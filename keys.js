@@ -1,4 +1,6 @@
-console.log("This is loaded.")
+const chalk = require("chalk")
+
+console.log(chalk.grey("This is loaded."));
 
 exports.spotify = {
     id: process.env.SPOTIFY_ID,
