@@ -161,7 +161,7 @@ start(userCommand, userInput);
 function suggestions(){
     // read random.txt file
 
-        fs.readFile("./random1.txt", "utf8", function(error, data) {
+        fs.readFile("./random.txt", "utf8", function(error, data) {
             if (error) {
                 return console.log(error);
             }
