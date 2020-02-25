@@ -3,7 +3,7 @@
 
 
 Link to video of the application functioning:
-	https://drive.google.com/file/d/1DDcWmN4G2yuQV96XWFVSSr-76Lsmo466/view
+	https://drive.google.com/file/d/1FFAkimTvD0VjiTfe83v0y2OPkTScyzaU/view
 
 
 1. Purpose for this app:
@@ -51,7 +51,7 @@ To see data about a movie type the command: “node liri.js movie-this” follow
 	
 
 4. Link to a video of the app functioning:
-	https://drive.google.com/file/d/1DDcWmN4G2yuQV96XWFVSSr-76Lsmo466/view
+	https://drive.google.com/file/d/1FFAkimTvD0VjiTfe83v0y2OPkTScyzaU/view
 
 5. Link to the deployed version of the app:
 	https://github.com/Jeff-Ashear/-liri-node-app.git
