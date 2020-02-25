@@ -3,6 +3,7 @@
 
 
 Link to video of the application functioning:
+	https://drive.google.com/file/d/1DDcWmN4G2yuQV96XWFVSSr-76Lsmo466/view
 
 
 1. Purpose for this app:
@@ -13,7 +14,7 @@ Link to video of the application functioning:
 -Axios will be used to access:
 	-Bands In Town
 			-OMBD
-	-The user will be able to input one of four text commands to pull results from the API’s
+	-The user will be able to input one of three text commands to pull results from the API’s
 
 
 2. How the app is organized:
@@ -23,11 +24,11 @@ The body of the code, in the liri.js file, will be responsible for executing:
 	    b. will look for and store input from the user following the command
  	    C. will the use the command to route the input to the correct function
 	II. A function for each command which will:
-Concatonate the user input with other strings to generate a coherently formatted api query
+Concatenate the user input with other strings to generate a coherently formatted api query
 Send that query
 Capture and parse the results
 Output the appropriate results that match the command
-Append a text file to create a log of user interactoins.
+Append a text file to create a log of user interactions.
       B. Addition files will be:
 	I. a keys.js file to route the api keys.
 	II.  a .gitignore file to limit the amount of unnecessary data uploaded to the repo
