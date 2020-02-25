@@ -20,27 +20,50 @@ function getMyBands() {
     .then(response => {
         // console.log(response.data)
             if (response.data.length === 0) {
-                console.log(chalk.bgRed("Sorry, ", userInput.join(" "), "currently does not have any upcoming performances."));
+                var noBandResponse = "Sorry, " + userInput.join(" ") + " currently does not have any upcoming performances."
+                console.log(chalk.bgRed(noBandResponse));
+                fs.appendFile('./log.txt', noBandResponse + "\n\r" , function(err) {
+                    if (err) throw err;
+                })
             } else {
                 
-                console.log(userInput.join(" "), " will be playing at the following venues:")
+                var bandConfirm = userInput.join(" ") + " will be playing at the following venues:"
+                console.log(chalk.red.bgGreen(bandConfirm));
+                fs.appendFile('./log.txt', bandConfirm + '\n\r', function(err) {
+                    if (err) throw err;
+                })
                 for (i = 0; i < response.data.length; i++) {
-                    console.log(chalk.yellow.bold("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
-                    console.log(chalk.redBright(response.data[i].venue.name));
-                    console.log(chalk.blue(response.data[i].venue.city, ", ", response.data[i].venue.country));
+                    //parses and stores the response
+                    var venueName = response.data[i].venue.name;
+                    var cityName = response.data[i].venue.city + ", " + response.data[i].venue.country;
                     var concertTime = moment(response.data[i].datetime).format('MM/DD/YYYY');
+
+                    //displays the parsed response
+                    console.log(chalk.yellow.bold("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+                    console.log(chalk.redBright(venueName));
+                    console.log(chalk.blue(cityName));
                     console.log(chalk.blue(concertTime));
                     console.log(chalk.yellow.bold("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+
+                    //logs the parsed response
+                    fs.appendFile('./log.txt', "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" + venueName + "\n" + cityName + "\n" + concertTime + "\n" + "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", function(err) {
+                        if (err) throw err;
+                    })
                 }
             }
         });
 }
 
 function getMeSpotify () {
-    console.log("inside spotify function")
+    // console.log("inside spotify function")
     if (userCommand === "spotify-this-song" && userInput.length === 0) {
+        console.log(chalk.yellow.bgRed("Nothing to hear... see?"))
         console.log(chalk.green('The instructions insist that I set the default spotify query to "The Sign" by Ace of Base.  I have tremendous difficulties imagining why, but I did it anyway.  When you are done with that drek and you find yourself ready to hear some music with a significantly more developed level facility and craft, try querying "Shofukan" by Snarky Puppy, "CAFO" by Animals as Leaders, or "Garden in the Bones" by Periphery.  Your brain and ears deserve it.'));
         userInput = "the sign"
+
+        fs.appendFile('./log.txt', 'The default Spotify query was tiggered.', function(err) {
+            if (err) throw err;
+        });
     }
         spotify.search({ type: 'track', query: userInput }, function(err, data) {
             if (err) {
@@ -51,12 +74,26 @@ function getMeSpotify () {
                     var songs = data.tracks.items[i];
                     //   console.log(songs)
                     // console.log("Songs.album.artists: ", songs.album.artists)
+                    //parses and stores the response
+                    var artistName = "Artist: " + songs.artists[0].name;
+                    var trackTitle = "Track Title: " + songs.name;
+                    var listenLink = "Check it out: " + songs.external_urls.spotify;
+                    var album = "From the album: " + songs.album.name;
+
+                    //displays the parsed respone
                     console.log(chalk.red.bold("----------------------------"));
-                    console.log(chalk.yellow.bold.underline("Artist: ", songs.artists[0].name));
-                    console.log(chalk.green.underline("Track Title: ", songs.name));
-                    console.log(chalk.cyan("Check it out: ", songs.external_urls.spotify));
-                    console.log(chalk.cyan("From the album: ", songs.album.name));
+                    console.log(chalk.yellow.bold.underline(artistName));
+                    console.log(chalk.green.underline(trackTitle));
+                    console.log(chalk.cyan(listenLink));
+                    console.log(chalk.cyan(album));
                     console.log(chalk.red.bold("----------------------------"));
+
+                    //logs the parsed response
+                    fs.appendFile('./log.txt',  "\n----------------------------\n" + artistName + "\n" + trackTitle + "\n" + listenLink + "\n" + album + "\n" + "----------------------------\n", function(err){
+                        if (err) throw err;
+                    })
+
+
             }
         });
     }
@@ -71,16 +108,33 @@ function getMyMovies() {
 
     axios.get(queryUrl).then(
         function(response){
-            console.log(chalk.redBright("============================="));
             // console.log(response.data)
-            console.log(chalk.yellow.bold.underline("Title: ", response.data.Title));
-            console.log(chalk.cyan("Released: ", response.data.Year));
-            console.log(chalk.cyan("IMDB Rating: ", response.data.imdbRating));
-            console.log(chalk.cyan("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value));
-            console.log(chalk.cyan("Produced in: ", response.data.Country));
-            console.log(chalk.cyan("Language(s): ", response.data.Language));
-            console.log(chalk.cyan("Actors: ", response.data.Actors));
+
+            //parse and store the needed data from the response
+            var movieTitle = "Title: " + response.data.Title;
+            var releaseDate = "Released: " + response.data.Year;
+            var imdbRating = "IMDB Rating: " + response.data.imdbRating;
+            var rottenTomatoes = "Rotten Tomatoes Rating: " + response.data.Ratings[1].Value;
+            var productionCountry = "Produced in: " + response.data.Country;
+            var filmLanguage = "Language(s): " + response.data.Language;
+            var actors = "Actors: " + response.data.Actors;
+
+            //print the data from the parsed response
             console.log(chalk.redBright("============================="));
+            console.log(chalk.yellow.bold.underline(movieTitle));
+            console.log(chalk.cyan(releaseDate));
+            console.log(chalk.cyan(imdbRating));
+            console.log(chalk.cyan(rottenTomatoes));
+            console.log(chalk.cyan(productionCountry));
+            console.log(chalk.cyan(filmLanguage));
+            console.log(chalk.cyan(actors));
+            console.log(chalk.redBright("============================="));
+
+            //append the parsed data from the response to the log
+            fs.appendFile('./log.txt', "\n=============================\n" + movieTitle + "\n" + releaseDate + "\n" + imdbRating + "\n" + rottenTomatoes + "\n" + productionCountry + "\n" + filmLanguage + "\n" + actors + "\n=============================\n", function(err) {
+                if (err) throw err;
+            });
+
         }
     )
 }
@@ -112,7 +166,8 @@ function suggestions(){
                 return console.log(error);
             }
             var resultArray = data.split(",");
-            console.log(resultArray)
+            // console.log(resultArray)
+            console.log(chalk.yellow.bgRed("Nothing to hear... see?"))
             userCommand = resultArray[0];
             userInput = resultArray[1];
             start(resultArray[0], resultArray[1]);
