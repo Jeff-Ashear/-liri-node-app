@@ -156,6 +156,7 @@ function start(ar1, arg2){
             break;
         default: suggestions();
       }
+      console.log(arg2);
 }
 start(userCommand, userInput);
 function suggestions(){
